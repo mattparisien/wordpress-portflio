@@ -76,17 +76,30 @@ const listenForMenuActions = () => {
 				this.circ.toggleClass("bg-black").toggleClass("bg-white");
 
 				//Rotate lines
-				$(this.lines[0]).css({
-					transform: "rotate(45deg)",
-				});
-				$(this.lines[1]).css({
-					transform: "rotate(-45deg)",
-				});
+			
 
 				if (this.menu.hasClass("is-active")) {
 					this.enter(this.waveEnter);
+					$(this.lines[0]).css({
+						transform: "rotate(45deg)",
+					});
+					$(this.lines[1]).css({
+						transform: "rotate(-45deg)",
+					});
+					$(this.burger).css({
+						justifyContent: "center"
+					})
 				} else {
 					this.leave(this.waveExit);
+					$(this.lines[0]).css({
+						transform: "rotate(0)",
+					});
+					$(this.lines[1]).css({
+						transform: "rotate(00)",
+					});
+					$(this.burger).css({
+						justifyContent: "space-between"
+					})
 				}
 			});
 		};
