@@ -7,3 +7,9 @@
 .is-hidden {
   transform: translateY(-100%);
 }
+
+.site-menu ul li {
+  transform: translateY(100%);
+  opacity: 0;
+  display: block;
+}
