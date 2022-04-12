@@ -14,46 +14,68 @@
 <body>
   <div class="site-menu flex items-center justify-center">
     <?php
-      wp_nav_menu(
-        array(
-          'menu' => 'primary',
-          'container' => '',
-          'theme_location' => 'primary',
-          'items_wrap' => '<ul class="menu-nav w-full" id="">%3$s</ul>'
-        )
+    wp_nav_menu(
+      array(
+        'menu' => 'primary',
+        'container' => '',
+        'theme_location' => 'primary',
+        'items_wrap' => '<ul class="menu-nav w-full" id="">%3$s</ul>'
       )
+    )
     ?>
     <button class="menu-close-btn">
       <div class="menu-close-btn_inner"></div>
     </button>
   </div>
 
-  <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-  <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-    <span class="font-semibold text-6xl tracking-tight">Tailwind CSS</span>
-  </div>
-  <div class="block lg:hidden">
-    <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-    </button>
-  </div>
-  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-    <div class="text-sm lg:flex-grow">
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 text-6xl">
-        Docs
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Examples
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-        Blog
-      </a>
+  <header class="site-header  h-20 w-full fixed top-0 left-0 flex justify-between items-center px-8 bg-black transition transform duration-300 ease-out">
+    <div class="header-logo text-white color-white">Matthew Parisien</div>
+    <nav>
+      <?php
+
+      wp_nav_menu(
+        array(
+          'menu' => 'primary',
+          'container' => '',
+          'theme_location' => 'primary',
+          'items_wrap' => '<ul class="menu-nav flex text-white" id="">%3$s</ul>'
+        )
+      )
+      ?>
+    </nav>
+  </header>
+
+  <button class="menu-button w-20 h-20 m-10 fixed top-0 right-0 z-50" id="site-burger">
+    <div class="w-full h-full relative flex items-center justify-center z-0">
+      <div class="circle absolute top-0 left-0 w-full h-full rounded-full bg-black z-0 scale-0"></div>
+      <div class="burger opacity-0 w-5 h-2 z-99 sticky flex flex-col items-center justify-between">
+        <span class="block w-full h-px bg-white"></span>
+
+        <span class="block w-full h-px bg-white"></span>
+      </div>
     </div>
-    <div>
-      <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Download</a>
-    </div>
+  </button>
+
+  <div class="site-menu fixed top-0 right-0 flex items-center justify-center w-full  h-full transition transform ease-in-out duration-300 delay-100 hidden">
+          <h1>hi!</h1>
+    <?php
+    wp_nav_menu(
+      array(
+        'menu' => 'primary',
+        'container' => '',
+        'theme_location' => 'primary',
+        'items_wrap' => '<ul class="menu-nav flex flex-col text-white text-6xl sticky z-50" id="">%3$s</ul>'
+      )
+    );
+    ?>
+
+
+
+    <svg id=" menu-svg morph" class="absolute top-0 left-0 z-10" viewbox="0 0 1920 1080" preserveAspectRatio="none" height="100%" width="100%">
+      <path class="morph-path" fill="#fcc42a" d="M1915.23,1.56H0V0H1915.23V1.56Z"></path>
+    </svg>
   </div>
-</nav>
+
+
 
   <div class="main-wrapper">

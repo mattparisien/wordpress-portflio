@@ -1,8 +1,13 @@
-
 import "./main.css";
-import {test} from "./test";
+import listenForMenuActions from "./menu";
+import Magnetic from "./magnetic";
+import {toggleHeader} from "./header";
 
+$(document).ready(() => {
+	listenForMenuActions();
+	toggleHeader();
 
-test();
+	const button = document.querySelector(".menu-button");
 
-alert('HOWDsssY! :)')
+	
+});

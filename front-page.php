@@ -12,6 +12,16 @@ if ( have_posts() ) {
 }
 ?>
 
+<section class="h-64"></section>
+<section class="h-64"></section>
+<section class="h-64"></section>
+<section class="h-64"></section>
+<section class="h-64"></section>
+<section class="h-64"></section>
+<section class="h-64"></section>
+<section class="h-64"></section>
+<section class="h-64"></section>
+
 
 
 <?php

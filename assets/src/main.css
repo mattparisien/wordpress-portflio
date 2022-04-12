@@ -1,3 +1,9 @@
-body {
-  background-color: blue;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.is-hidden {
+  transform: translateY(-100%);
 }
