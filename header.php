@@ -45,7 +45,7 @@
     </nav>
   </header>
 
-  <button class="menu-button w-20 h-20 m-10 fixed top-0 right-0 z-50" id="site-burger">
+  <button class="menu-button w-20 h-20 m-10 fixed top-0 right-0 z-50" id="site-burger" data-threshold="60" data-ratio="3.5" data-max="100" data-scale="1.1" data-easing="0.0225">
     <div class="w-full h-full relative flex items-center justify-center z-0">
       <div class="circle absolute top-0 left-0 w-full h-full rounded-full bg-black z-0 scale-0"></div>
       <div class="burger opacity-0 w-5 h-2 z-99 sticky flex flex-col items-center justify-between">
@@ -57,7 +57,7 @@
   </button>
 
   <div class="site-menu fixed top-0 right-0 flex items-center justify-center w-full  h-full transition transform ease-in-out duration-300 delay-100 hidden">
-          <h1>hi!</h1>
+    <h1>hi!</h1>
     <?php
     wp_nav_menu(
       array(

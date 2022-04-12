@@ -27,10 +27,13 @@ export default class MagneticItem {
 		};
 		(this.history = false),
 			(this.scale = this.target.getAttribute("data-scale"));
+
+		this.init();
 	}
 
-	handleMouseMove(e) {
-		(this.mousePos.x = e.pageX), (this.mousePos.y = e.pageY);
+	handleMouseMove(e, mousePos) {
+		mousePos.x = e.pageX;
+		mousePos.y = e.pageY;
 	}
 
 	handleResize(e) {
@@ -58,5 +61,39 @@ export default class MagneticItem {
 			this.threshold = this.threshold / this.ratio;
 			this.history = false;
 		}
+
+		return isHover;
+	}
+
+	run() {
+		window.webkitRequestAnimationFrame(() => this.run());
+
+		this.transform.x = this.isMagnetic
+			? ((this.mousePos.x - this.width / 2) / this.width) & this.transform.max
+			: 0;
+		this.transform.y = this.isMagnetic
+			? this.mousePos.y - (this.height / 2 / this.height) * this.transform.max
+			: 0;
+		this.transform.scale = this.isMagnetic ? this.scale : 1;
+
+		//Lerp
+		this.easing.x += (this.transform.x - this.easing.x) * this.easing.value;
+		this.easing.y += (this.transform.y - this.easing.y) * this.easing.value;
+		this.easing.scale +=
+			(this.transform.scale - this.easing.scale) * this.easing.value;
+
+		this.target.style.transform = `translate(${this.easing.x.toFixed(
+			2
+		)}px, ${this.easing.y.toFixed(
+			2
+		)}px)translateZ(0)scale(${this.easing.scale.toFixed(2)})`;
+	}
+
+	init() {
+		document.addEventListener("mousemove", e => {
+			this.handleMouseMove(e, this.mousePos);
+		});
+		window.addEventListener("resize", this.handleResize);
+		this.run();
 	}
 }
