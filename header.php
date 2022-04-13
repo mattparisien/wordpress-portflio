@@ -49,9 +49,9 @@
     <div class="w-full h-full relative flex items-center justify-center z-0">
       <div class="circle absolute top-0 left-0 w-full h-full rounded-full bg-black z-0 scale-0"></div>
       <div class="burger opacity-0 w-5 h-2 z-99 sticky flex flex-col items-center justify-between">
-        <span class="block w-full h-px bg-white"></span>
+        <span class="block w-full h-px bg-white transition transform duration-300"></span>
 
-        <span class="block w-full h-px bg-white"></span>
+        <span class="block w-full h-px bg-white transition transform duration-300"></span>
       </div>
     </div>
   </button>

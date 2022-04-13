@@ -76,7 +76,6 @@ const listenForMenuActions = () => {
 				this.circ.toggleClass("bg-black").toggleClass("bg-white");
 
 				//Rotate lines
-			
 
 				if (this.menu.hasClass("is-active")) {
 					this.enter(this.waveEnter);
@@ -87,8 +86,8 @@ const listenForMenuActions = () => {
 						transform: "rotate(-45deg)",
 					});
 					$(this.burger).css({
-						justifyContent: "center"
-					})
+						justifyContent: "center",
+					});
 				} else {
 					this.leave(this.waveExit);
 					$(this.lines[0]).css({
@@ -98,8 +97,8 @@ const listenForMenuActions = () => {
 						transform: "rotate(00)",
 					});
 					$(this.burger).css({
-						justifyContent: "space-between"
-					})
+						justifyContent: "space-between",
+					});
 				}
 			});
 		};
@@ -187,11 +186,20 @@ const listenForMenuActions = () => {
 
 			callback();
 			this.enterContent();
+			this.toggleSiteOverflow();
 		}
 
 		leave(callback) {
 			callback(() => menu.addClass("hidden"));
 			this.leaveContent();
+			this.toggleSiteOverflow();
+		}
+
+		toggleSiteOverflow() {
+			$(this.body).toggleClass("overflow-hidden");
+			const isOverflowHidden = this.body.classList.contains("overflow-hidden");
+
+			this.body.style.overflow = isOverflowHidden ? "hidden" : "visible";
 		}
 	}
 

@@ -31,10 +31,11 @@ export default class MagneticItem {
 		this.init();
 	}
 
-	handleMouseMove(e, mousePos) {
-		mousePos.x = e.pageX;
-		mousePos.y = e.pageY;
-	}
+	handleMouseMove = e => {
+		this.mousePos.x = e.pageX;
+		this.mousePos.y = e.pageY;
+		this.isMagnetic = this.makeMagnetic(e.pageX, e.pageY);
+	};
 
 	handleResize(e) {
 		this.bounds = this.target.getBoundingClientRect();
@@ -42,7 +43,7 @@ export default class MagneticItem {
 		this.window.height = window.innerHeight;
 	}
 
-	makeMagnetic(x, y) {
+	makeMagnetic = (x, y) => {
 		const centerX = this.bounds.left + this.bounds.width / 2;
 		const centerY = this.bounds.top + this.bounds.height / 2;
 
@@ -51,19 +52,20 @@ export default class MagneticItem {
 		const c = Math.sqrt(a * a + b * b);
 
 		const isHover = c < this.bounds.width / 2 + this.threshold;
+		console.log(this.bounds.width / 2 + this.threshold);
 
 		if (!this.history && isHover) {
 			this.target.classList.add("is-hover");
 			this.threshold = this.threshold * this.ratio;
 			this.history = true;
 		} else if (this.history && !isHover) {
+			console.log("in here!");
 			this.target.classList.remove("is-hover");
 			this.threshold = this.threshold / this.ratio;
 			this.history = false;
 		}
-
 		return isHover;
-	}
+	};
 
 	run() {
 		window.webkitRequestAnimationFrame(() => this.run());
@@ -91,7 +93,12 @@ export default class MagneticItem {
 
 	init() {
 		document.addEventListener("mousemove", e => {
-			this.handleMouseMove(e, this.mousePos);
+			this.handleMouseMove(
+				e,
+				this.mousePos,
+				this.isMagnetic,
+				this.makeMagnetic
+			);
 		});
 		window.addEventListener("resize", this.handleResize);
 		this.run();
