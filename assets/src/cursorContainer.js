@@ -10,6 +10,7 @@ import vertex from "./shaders/vertex.glsl";
 import fragment from "./shaders/fragment.glsl";
 import gsapCore from "gsap/gsap-core";
 import loadImages from "./utils/loadImages";
+import { ShapeGeometry } from "three";
 
 // const textures = {};
 
@@ -168,7 +169,8 @@ export default class Cursor {
 		this.links = links;
 		this.elWidth = this.cursorBounds.width;
 		this.elHeight = this.cursorBounds.height;
-		(this.currentLink = null), this.appendListItems();
+		this.currentHovered = this.links[0];
+		this.appendListItems();
 		this.moveMouse();
 		this.moveCursor();
 		this.addEventListeners(this.triggerContainer, this.links);
@@ -199,8 +201,20 @@ export default class Cursor {
 		});
 
 		links.forEach((link, idx) => {
-			link.addEventListener("mouseenter", () => {
-				$(this.projectItems[idx]).removeClass("-translate-y-full");
+			link.addEventListener("mouseenter", e => {
+				console.log("current hovered", this.currentHovered);
+
+				if (this.currentHovered !== e.target) {
+					// const index = this.links.indexOf(this.currentLink);
+					const currentIndex = this.links.indexOf(e.target);
+					const prevIndex = this.links.indexOf(this.currentHovered);
+
+					const nextItem = this.projectItems[currentIndex];
+					const prevItem = this.projectItems[prevIndex];
+					this.switchProjectItems(prevItem, nextItem);
+
+					this.currentHovered = e.target;
+				}
 			});
 
 			link.addEventListener("mouseleave", () => {
@@ -214,8 +228,8 @@ export default class Cursor {
 		this.inner.classList.remove("opacity-0");
 
 		gsap.to(this.element, {
-			width: 400,
-			height: 250,
+			width: 600,
+			height: 450,
 			ease: "power3.out",
 			duration: 0.5,
 			onUpdate: () => {
@@ -241,34 +255,51 @@ export default class Cursor {
 	}
 
 	appendListItems() {
-		const ul = document.createElement("ul");
-		ul.classList.add("w-full", "h-full", "relative");
-
-		this.inner.appendChild(ul);
+		const ul = $(this.element).find("ul");
 
 		images.forEach((image, idx) => {
 			const imageItem = document.createElement("li");
 			imageItem.style.backgroundImage = `url(${image})`;
 
 			imageItem.classList.add(
+				"bg-cover",
 				"bg-center",
 				"w-full",
 				"h-full",
 				"absolute",
 				"top-0",
 				"left-0",
-				"transition",
-				"transform",
-				"duration-400",
-				"ease-in-out",
 				"will-change-transform"
 			);
 
 			idx !== 0 && imageItem.classList.add("-translate-y-full");
-			ul.appendChild(imageItem);
+			console.log(ul);
+			$(ul).append(imageItem);
 		});
 
-		this.projectItems = $(this.inner).find("li");
+		this.projectItems = $(ul).find("li");
+	}
+
+	switchProjectItems(prev, next) {
+		gsap
+			.timeline()
+			.to(prev, {
+				y: "100%",
+				duration: 0.5,
+				ease: "power3.out",
+			})
+			.to(
+				next,
+				{
+					y: 0,
+					duration: 0.5,
+					ease: "power3.out",
+				},
+				0
+			)
+			.set(prev, {
+				y: "-100%",
+			});
 	}
 
 	get cursorBounds() {
@@ -286,5 +317,5 @@ export default class Cursor {
 const cursor = document.querySelector(".cursor");
 const cursorInner = document.querySelector(".cursor .cursor_inner");
 const container = document.querySelector(".work-container ul");
-const links = document.querySelectorAll(".work-container li");
+const links = Array.from(document.querySelectorAll(".work-container li"));
 new Cursor(cursor, cursorInner, container, links);

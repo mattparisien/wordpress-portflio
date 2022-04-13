@@ -619,6 +619,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-5 {
   height: 1.25rem;
 }
+.h-4\/5 {
+  height: 80%;
+}
 .w-full {
   width: 100%;
 }
@@ -627,6 +630,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-5 {
   width: 1.25rem;
+}
+.w-4\/5 {
+  width: 80%;
 }
 .scale-0 {
   --tw-scale-x: 0;
@@ -787,6 +793,14 @@ body {
 
 .-translate-y-full {
 	transform: translateY(-100%);
+}
+
+.bg-cover {
+	background-size: cover;
+}
+
+.bg-center {
+	background-position: center;
 }
 
 

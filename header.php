@@ -75,7 +75,10 @@
 
 
   <div class="cursor fixed top-0 left-0 w-5 h-5 border-2 border-black rounded-full z-20 pointer-events-none will-change-transform overflow-hidden">
-    <div class="cursor_inner w-full h-full relative opacity-0 bg-cream will-change-opacity"></div>
+    <div class="cursor_inner flex items-center justify-center w-full h-full relative opacity-0 bg-cream will-change-opacity">
+      <ul class="w-4/5 h-4/5 relative overflow-hidden"></ul>
+
+    </div>
   </div>
 
   <main class="main-wrapper h-full" data-scroll-container>

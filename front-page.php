@@ -21,12 +21,12 @@ get_header()
 
 <section class="h-full bg-fire work-container flex items-center justify-center" data-scroll-section>
   <ul class="flex flex-col items-center justify-center text-xl work-list z-30">
-    <li class=" text-6xl">Hover me</li>
-    <li class=" text-6xl">Hover me</li>
-    <li class=" text-6xl">Hover me</li>
-    <li class=" text-6xl">Hover me</li>
-    <li class=" text-6xl">Hover me</li>
-    <li class=" text-6xl">Hover me</li>
+    <li class=" text-6xl">hello</li>
+    <li class=" text-6xl">hahaha</li>
+    <li class=" text-6xl">okokok</li>
+    <li class=" text-6xl">Hover sssss</li>
+    <li class=" text-6xl">pancakes</li>
+    <li class=" text-6xl">sup</li>
   </ul>
 </section>
 <section class="h-full bg-turq" data-scroll-section>

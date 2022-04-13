@@ -43,6 +43,14 @@ body {
 	transform: translateY(-100%);
 }
 
+.bg-cover {
+	background-size: cover;
+}
+
+.bg-center {
+	background-position: center;
+}
+
 
 header ul li:not(:last-child) {
 	margin-right: 5rem;
