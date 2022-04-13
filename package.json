@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "animejs": "^3.2.1",
-    "gsap": "file:gsap-bonus.tgz"
+    "file-loader": "^6.2.0",
+    "gsap": "file:gsap-bonus.tgz",
+    "three": "^0.139.2"
   }
 }
