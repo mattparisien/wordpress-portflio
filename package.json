@@ -25,6 +25,7 @@
     "animejs": "^3.2.1",
     "file-loader": "^6.2.0",
     "gsap": "file:gsap-bonus.tgz",
-    "three": "^0.139.2"
+    "three": "^0.139.2",
+    "webpack-glsl-loader": "^1.0.1"
   }
 }

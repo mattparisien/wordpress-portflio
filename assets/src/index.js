@@ -12,9 +12,11 @@ $(document).ready(() => {
 	const container = document.querySelector(".work-container");
 
 	const items = document.querySelectorAll(".work-container li");
-	const itemsWrapper = document.querySelectorAll(".work-container ul");
+	const itemsWrapper = document.querySelector(".work-container ul");
 
-	const cursorFollow = new WebGl(container, itemsWrapper);
+	console.log(itemsWrapper)
+
+	const cursorFollow = new WebGl(container, items, itemsWrapper);
 
 	// const btn = new MagneticItem(container, target);
 });

@@ -6,6 +6,8 @@ import imageThree from "../images/3.jpeg";
 import imageFour from "../images/4.jpeg";
 import imageFive from "../images/5.jpeg";
 import imageSix from "../images/6.jpeg";
+import vertex from "./shaders/vertex.glsl";
+import fragment from "./shaders/fragment.glsl";
 
 const textures = {};
 
@@ -16,17 +18,19 @@ images.forEach(
 		(textures[`texture${i + 1}`] = new THREE.TextureLoader().load(image))
 );
 
+let targetX = 0;
+let targetY = 0;
+
 export default class WebGl {
 	constructor(container, links, linksContainer) {
 		this.container = container;
 		this.links = links;
 		this.linksContainer = linksContainer;
 		this.linksHover = false;
-		this.target = target;
 		this.scene = new THREE.Scene();
 		this.perspective = 1000; //Cam perspective
 		this.sizes = new THREE.Vector2(0, 0); //Mesh size
-		this.offset = new Vector2(0, 0); //Mesh pos
+		this.offset = new THREE.Vector2(0, 0); //Mesh pos
 		this.uniforms = {
 			uTexture: { value: textures.texture1 },
 			uAlpha: { value: 0.0 },
@@ -58,6 +62,9 @@ export default class WebGl {
 		});
 		this.addEventListeners(this.linksContainer);
 		this.setupCamera();
+		this.onMouseMove();
+		this.createMesh();
+		this.render();
 	}
 
 	get viewport() {
@@ -73,9 +80,34 @@ export default class WebGl {
 	}
 
 	setupCamera() {
+		window.addEventListener("resize", this.onWindowResize.bind(this));
+
 		let fov =
 			(180 * (2 * Math.atan(this.viewport.height / 2 / this.perspective))) /
 			Math.PI;
+
+		this.camera = new THREE.PerspectiveCamera(
+			fov,
+			this.viewport.aspectRatio,
+			0.1,
+			1000
+		);
+		this.camera.position.set(0, 0, this.perspective);
+
+		//Renderer
+		this.renderer = new THREE.WebGL1Renderer({ antialias: true, alpha: true });
+		this.renderer.setSize(this.viewport.width, this.viewport.height);
+		this.renderer.setPixelRatio(window.devicePixelRatio);
+		this.container.appendChild(this.renderer.domElement);
+	}
+
+	onWindowResize() {
+		this.camera.aspect = this.viewport.aspectRatio;
+		this.camera.fov =
+			(180 * (2 * Math.atan(this.viewport.height / 2 / this.perspective))) /
+			Math.PI;
+		this.renderer.setSize(this.viewport.width, this.viewport.height);
+		this.camera.updateProjectionMatrix();
 	}
 
 	addEventListeners(el) {
@@ -85,5 +117,32 @@ export default class WebGl {
 		el.addEventListener("mouseleave", () => {
 			this.linksHover = false;
 		});
+	}
+
+	onMouseMove() {
+		window.addEventListener("mousemove", e => {
+			targetX = e.clientX;
+			targetY = e.clientY;
+		});
+	}
+
+	createMesh() {
+		this.geometry = new THREE.PlaneGeometry(1, 1, 20, 20);
+		this.material = new THREE.ShaderMaterial({
+			uniforms: this.uniforms,
+			vertexShader: vertex,
+			fragmentShader: fragment,
+			transparent: true
+		})
+		this.mesh = new THREE.Mesh(this.geometry, this.material);
+		this.sizes.set(250, 350);
+		this.mesh.scale.set(this.sizes.x, this.sizes.y);
+		this.mesh.position.set(this.offset.x, this.offset.y);
+		this.scene.add(this.mesh);
+	}
+
+	render() {
+		this.renderer.render(this.scene, this.camera);
+		requestAnimationFrame(this.render.bind(this));
 	}
 }
