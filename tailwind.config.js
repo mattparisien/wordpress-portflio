@@ -4,6 +4,10 @@ module.exports = {
 	content: ["./header.php", "./*.php"],
 	theme: {
 		extend: {
+			fontFamily: {
+				mtl: ["Neue Mtl"],
+				voyage: ["Voyage"],
+			},
 			fontSize: {
 				xs: ".75rem",
 				sm: ".875rem",
@@ -17,9 +21,14 @@ module.exports = {
 				"5xl": "3rem",
 				"6xl": "4rem",
 				"7xl": "5rem",
+				huge: "20rem",
 			},
 			colors: {
 				turq: "#016F67",
+				cream: "#E9E5D7",
+				orange: "#FF8109",
+				fire: "#F4380C",
+				bubblegum: "#FF91BF",
 			},
 		},
 	},

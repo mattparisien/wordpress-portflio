@@ -44,10 +44,10 @@ module.exports = {
 				test: /\.glsl$/,
 				use: [
 					{
-						loader: 'webpack-glsl-loader'
-					}
-				]
-			}
+						loader: "webpack-glsl-loader",
+					},
+				],
+			},
 		],
 	},
 };
