@@ -4,6 +4,9 @@ module.exports = {
 	content: ["./header.php", "./*.php"],
 	theme: {
 		extend: {
+			willChange: {
+				opacity: "opacity",
+			},
 			fontFamily: {
 				mtl: ["Neue Mtl"],
 				voyage: ["Voyage"],

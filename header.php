@@ -74,6 +74,8 @@
   </div>
 
 
-  <div class="cursor-card fixed top-0 left-0 w-40 h-40 bg-white "></div>
+  <div class="cursor fixed top-0 left-0 w-5 h-5 border-2 border-black rounded-full z-20 pointer-events-none will-change-transform overflow-hidden">
+    <div class="cursor_inner w-full h-full relative opacity-0 bg-cream will-change-opacity"></div>
+  </div>
 
   <main class="main-wrapper h-full" data-scroll-container>

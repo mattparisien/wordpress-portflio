@@ -39,10 +39,10 @@ body {
 	left: 0;
 }
 
-.work-container ul {
-	z-index: 50;
-	position: sticky;
+.-translate-y-full {
+	transform: translateY(-100%);
 }
+
 
 header ul li:not(:last-child) {
 	margin-right: 5rem;

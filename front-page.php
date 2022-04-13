@@ -18,8 +18,9 @@ get_header()
 
 
 
+
 <section class="h-full bg-fire work-container flex items-center justify-center" data-scroll-section>
-  <ul class="flex flex-col items-center justify-center text-xl work-list">
+  <ul class="flex flex-col items-center justify-center text-xl work-list z-30">
     <li class=" text-6xl">Hover me</li>
     <li class=" text-6xl">Hover me</li>
     <li class=" text-6xl">Hover me</li>

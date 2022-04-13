@@ -8,18 +8,18 @@ import imageFive from "../images/5.jpeg";
 import imageSix from "../images/6.jpeg";
 import vertex from "./shaders/vertex.glsl";
 import fragment from "./shaders/fragment.glsl";
+import gsapCore from "gsap/gsap-core";
+import loadImages from "./utils/loadImages";
 
-const textures = {};
+// const textures = {};
 
 const images = [imageOne, imageTwo, imageThree, imageFour, imageFive, imageSix];
 
-images.forEach(
-	(image, i) =>
-		(textures[`texture${i + 1}`] = new THREE.TextureLoader().load(image))
-);
-
 let targetX = 0;
 let targetY = 0;
+
+//Preload images
+// const loadedImages = loadImages(images);
 
 // export default class WebGl {
 // 	constructor(container, links, linksContainer) {
@@ -157,36 +157,134 @@ let targetY = 0;
 // 	}
 // }
 
+//Preload cursor images
+// const images = [imageOne, imageTwo, imageThree, imageFour, imageFive, imageSix];
+
 export default class Cursor {
-	constructor(element, triggerContainer) {
+	constructor(element, inner, triggerContainer, links) {
 		this.triggerContainer = triggerContainer;
+		this.inner = inner;
 		this.element = element;
-		this.elWidth = this.element.getBoundingClientRect().width;
-		this.elHeight = this.element.getBoundingClientRect().height;
-		this.isHovered = false;
+		this.links = links;
+		this.elWidth = this.cursorBounds.width;
+		this.elHeight = this.cursorBounds.height;
+		(this.currentLink = null), this.appendListItems();
 		this.moveMouse();
 		this.moveCursor();
+		this.addEventListeners(this.triggerContainer, this.links);
 	}
 
 	moveMouse() {
 		window.addEventListener("mousemove", e => {
-			targetX = e.clientX - (this.elWidth / 2);
-			targetY = e.clientY - (this.elHeight) / 2;
+			targetX = e.clientX - this.elWidth / 2;
+			targetY = e.clientY - this.elHeight / 2;
 		});
 	}
 
 	moveCursor() {
-
-
 		const x = lerp(this.element.getBoundingClientRect().left, targetX, 0.1);
 		const y = lerp(this.element.getBoundingClientRect().top, targetY, 0.1);
-
-		console.log(x, y)
 
 		this.element.style.transform = `translate(${x}px, ${y}px)`;
 		requestAnimationFrame(this.moveCursor.bind(this));
 	}
+
+	addEventListeners(container, links) {
+		container.addEventListener("mouseenter", () => {
+			this.changeCursor();
+		});
+
+		container.addEventListener("mouseleave", () => {
+			this.revertCursor();
+		});
+
+		links.forEach((link, idx) => {
+			link.addEventListener("mouseenter", () => {
+				$(this.projectItems[idx]).removeClass("-translate-y-full");
+			});
+
+			link.addEventListener("mouseleave", () => {
+				$(this.projectItems[idx]).addClass("-translate-y-full");
+			});
+		});
+	}
+
+	changeCursor() {
+		gsap.set(this.element, { borderRadius: 0 });
+		this.inner.classList.remove("opacity-0");
+
+		gsap.to(this.element, {
+			width: 400,
+			height: 250,
+			ease: "power3.out",
+			duration: 0.5,
+			onUpdate: () => {
+				this.elWidth = this.cursorBounds.width;
+				this.elHeight = this.cursorBounds.height;
+			},
+		});
+	}
+
+	revertCursor() {
+		gsap.to(this.element, {
+			width: "1.25rem",
+			height: "1.25rem",
+			ease: "power3.out",
+			duration: 0.5,
+			onUpdate: () => {
+				this.elWidth = this.cursorBounds.width;
+				this.elHeight = this.cursorBounds.height;
+			},
+		});
+		gsap.set(this.element, { borderRadius: "50%" });
+		this.inner.classList.add("opacity-0");
+	}
+
+	appendListItems() {
+		const ul = document.createElement("ul");
+		ul.classList.add("w-full", "h-full", "relative");
+
+		this.inner.appendChild(ul);
+
+		images.forEach((image, idx) => {
+			const imageItem = document.createElement("li");
+			imageItem.style.backgroundImage = `url(${image})`;
+
+			imageItem.classList.add(
+				"bg-center",
+				"w-full",
+				"h-full",
+				"absolute",
+				"top-0",
+				"left-0",
+				"transition",
+				"transform",
+				"duration-400",
+				"ease-in-out",
+				"will-change-transform"
+			);
+
+			idx !== 0 && imageItem.classList.add("-translate-y-full");
+			ul.appendChild(imageItem);
+		});
+
+		this.projectItems = $(this.inner).find("li");
+	}
+
+	get cursorBounds() {
+		const { top, left, width, height } = this.element.getBoundingClientRect();
+
+		return {
+			top,
+			left,
+			width,
+			height,
+		};
+	}
 }
 
-const cursor = document.querySelector(".cursor-card");
-new Cursor(cursor, null);
+const cursor = document.querySelector(".cursor");
+const cursorInner = document.querySelector(".cursor .cursor_inner");
+const container = document.querySelector(".work-container ul");
+const links = document.querySelectorAll(".work-container li");
+new Cursor(cursor, cursorInner, container, links);
